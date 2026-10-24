@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Driving Animation</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+    }
+
+    .scene {
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(#65cfff 0%, #d8f5ff 70%, #83cf67 70%);
+    }
+
+    .sun {
+        position: absolute;
+        top: 40px;
+        right: 70px;
+        width: 80px;
+        height: 80px;
+        background: #ffdf55;
+        border-radius: 50%;
+        box-shadow: 0 0 35px #ffdf55;
+    }
+
+    .cloud {
+        position: absolute;
+        top: 100px;
+        left: -200px;
+        width: 120px;
+        height: 40px;
+        background: white;
+        border-radius: 50px;
+        animation: cloudMove 15s linear infinite;
+    }
+
+    .cloud::before,
+    .cloud::after {
+        content: "";
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+    }
+
+    .cloud::before {
+        width: 55px;
+        height: 55px;
+        top: -25px;
+        left: 20px;
+    }
+
+    .cloud::after {
+        width: 45px;
+        height: 45px;
+        top: -18px;
+        right: 20px;
+    }
+
+    .road {
+        position: absolute;
+        bottom: 0;
+        height: 30%;
+        width: 100%;
+        background: #444;
+        border-top: 8px solid #666;
+    }
+
+    .line {
+        position: absolute;
+        top: 50%;
+        width: 200%;
+        border-top: 6px dashed white;
+        animation: roadMove 1s linear infinite;
+    }
+
+    .car {
+        position: absolute;
+        width: 220px;
+        height: 90px;
+        bottom: 17%;
+        left: 35%;
+        animation: bounce 0.4s ease-in-out infinite alternate;
+    }
+
+    .body {
+        position: absolute;
+        bottom: 15px;
+        width: 220px;
+        height: 55px;
+        background: #e53935;
+        border-radius: 25px 35px 10px 10px;
+        border: 3px solid #a71919;
+    }
+
+    .top {
+        position: absolute;
+        top: 0;
+        left: 45px;
+        width: 125px;
+        height: 45px;
+        background: #e53935;
+        border-radius: 50px 50px 0 0;
+    }
+
+    .window {
+        position: absolute;
+        top: 8px;
+        left: 60px;
+        width: 45px;
+        height: 28px;
+        background: #b8f0ff;
+        border-radius: 15px 5px 0 0;
+        border: 2px solid #a71919;
+    }
+
+    .window2 {
+        position: absolute;
+        top: 8px;
+        left: 112px;
+        width: 45px;
+        height: 28px;
+        background: #b8f0ff;
+        border-radius: 5px 15px 0 0;
+        border: 2px solid #a71919;
+    }
+
+    .wheel {
+        position: absolute;
+        bottom: 0;
+        width: 48px;
+        height: 48px;
+        background: #222;
+        border: 5px solid #111;
+        border-radius: 50%;
+        animation: spin 0.5s linear infinite;
+    }
+
+    .wheel::after {
+        content: "";
+        position: absolute;
+        inset: 9px;
+        background: #ccc;
+        border: 3px dashed #555;
+        border-radius: 50%;
+    }
+
+    .wheel.left { left: 25px; }
+    .wheel.right { right: 25px; }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes roadMove {
+        to { transform: translateX(-100px); }
+    }
+
+    @keyframes cloudMove {
+        to { left: 110%; }
+    }
+
+    @keyframes bounce {
+        to { transform: translateY(-3px); }
+    }
+
+    .title {
+        position: absolute;
+        top: 30px;
+        left: 20px;
+        color: white;
+        font-size: clamp(22px, 4vw, 38px);
+        text-shadow: 2px 2px 5px #555;
+    }
+</style>
+</head>
+
+<body>
+<div class="scene">
+    <div class="sun"></div>
+    <div class="cloud"></div>
+
+    <h1 class="title">🚗 Let's Go Driving!</h1>
+
+    <div class="road">
+        <div class="line"></div>
+    </div>
