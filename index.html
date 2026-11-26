@@ -179,52 +179,31 @@
 
     .button:hover { filter: brightness(1.1); }
 
-    .monogram {
-      position: relative;
-      overflow: hidden;
+    .ninja-art {
       width: min(300px, 65vw);
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
       justify-self: center;
+      margin: 0;
+      padding: 14px;
       border: 2px solid var(--accent);
-      border-radius: 50%;
+      border-radius: 46% 54% 49% 51%;
       background: var(--surface);
-      color: var(--accent);
-      font-size: clamp(8rem, 19vw, 13rem);
-      font-weight: 900;
-      letter-spacing: -0.08em;
-      line-height: 1;
       box-shadow: 0 0 0 16px rgba(101, 230, 255, 0.07);
     }
 
-    .monogram-letter {
-      position: relative;
-      z-index: 1;
+    .ninja-art svg {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
-    .monogram-band {
-      position: absolute;
-      z-index: 0;
-      top: 26%;
-      left: -15%;
-      width: 130%;
-      height: 28px;
-      transform: rotate(-17deg);
-      background: var(--anime-accent);
-      box-shadow: 0 0 28px rgba(255, 112, 136, 0.38);
-    }
-
-    .monogram-band::after {
-      position: absolute;
-      top: 0;
-      right: -17px;
-      width: 42px;
-      height: 28px;
-      background: var(--anime-accent);
-      content: "";
-      transform: skewY(-32deg);
-      transform-origin: left top;
+    .ninja-art figcaption {
+      margin-top: 6px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-align: center;
+      text-transform: uppercase;
     }
 
     .section {
@@ -400,7 +379,7 @@
         padding-block: 74px;
       }
 
-      .monogram { grid-row: 1; }
+      .ninja-art { grid-row: 1; }
       .language-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .experience-grid { grid-template-columns: 1fr; }
       .section { padding-block: 58px; }
@@ -448,10 +427,22 @@
           <a class="button button-secondary" href="https://github.com/s26137-stack">My GitHub profile</a>
         </div>
       </div>
-      <div class="monogram" aria-hidden="true">
-        <span class="monogram-band"></span>
-        <span class="monogram-letter">A</span>
-      </div>
+      <figure class="ninja-art">
+        <svg viewBox="0 0 320 320" role="img" aria-labelledby="ninja-title">
+          <title id="ninja-title">Original ninja character with a bright headband and mask</title>
+          <circle cx="160" cy="160" r="151" fill="#0b1020" stroke="#52617a" stroke-width="3"/>
+          <path d="M64 277C73 210 81 108 111 79c15-14 32-22 49-22s34 8 49 22c30 29 38 131 47 198-27 21-60 32-96 32s-69-11-96-32Z" fill="#070c18" stroke="#65e6ff" stroke-width="5" stroke-linejoin="round"/>
+          <path d="m75 136 166-34 7 34-166 35Z" fill="#ff7088" stroke="#0b1020" stroke-width="5" stroke-linejoin="round"/>
+          <path d="m240 105 51-25-24 47-20 18Z" fill="#ff7088" stroke="#0b1020" stroke-width="5" stroke-linejoin="round"/>
+          <path d="M97 176c19-20 44-23 65-8-17 19-41 27-62 19Z" fill="#f4f7ff"/>
+          <path d="M158 168c22-17 47-14 65 5l-3 11c-21 8-45 0-62-16Z" fill="#f4f7ff"/>
+          <circle cx="131" cy="174" r="7" fill="#0b1020"/>
+          <circle cx="190" cy="173" r="7" fill="#0b1020"/>
+          <path d="M99 207c38-16 84-17 122-1l-17 48c-31 16-57 16-88 0Z" fill="#19253c" stroke="#65e6ff" stroke-width="4" stroke-linejoin="round"/>
+          <path d="m126 228 17-5m14 7 18-6m11 10 14-5" fill="none" stroke="#c1cce0" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <figcaption>Ninja-inspired profile art</figcaption>
+      </figure>
     </section>
 
     <section class="section" id="about" aria-labelledby="about-title">
