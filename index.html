@@ -1,198 +1,463 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Car Driving Animation</title>
-
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Adam's personal introduction page">
+  <title>Adam | Student & Lifelong Learner</title>
+  <style>
+    :root {
+      --ink: #17203a;
+      --muted: #69708a;
+      --purple: #7057d9;
+      --pink: #ee78a9;
+      --orange: #ffad66;
+      --cream: #fffaf5;
+      --line: rgba(23, 32, 58, 0.09);
     }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
-        overflow: hidden;
-        font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 12%, rgba(238, 120, 169, 0.12), transparent 22rem),
+        radial-gradient(circle at 92% 38%, rgba(112, 87, 217, 0.13), transparent 24rem),
+        var(--cream);
     }
 
-    .scene {
-        height: 100vh;
-        position: relative;
-        overflow: hidden;
-        background: linear-gradient(#65cfff 0%, #d8f5ff 70%, #83cf67 70%);
+    a { color: inherit; }
+
+    .nav {
+      width: min(1120px, calc(100% - 40px));
+      height: 82px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .sun {
-        position: absolute;
-        top: 40px;
-        right: 70px;
-        width: 80px;
-        height: 80px;
-        background: #ffdf55;
-        border-radius: 50%;
-        box-shadow: 0 0 35px #ffdf55;
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-decoration: none;
+      letter-spacing: -0.03em;
     }
 
-    .cloud {
-        position: absolute;
-        top: 100px;
-        left: -200px;
-        width: 120px;
-        height: 40px;
-        background: white;
-        border-radius: 50px;
-        animation: cloudMove 15s linear infinite;
+    .brand-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin-left: 4px;
+      border-radius: 50%;
+      background: var(--pink);
     }
 
-    .cloud::before,
-    .cloud::after {
-        content: "";
-        position: absolute;
-        background: white;
-        border-radius: 50%;
+    .nav-links {
+      display: flex;
+      gap: 28px;
     }
 
-    .cloud::before {
-        width: 55px;
-        height: 55px;
-        top: -25px;
-        left: 20px;
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--muted);
     }
 
-    .cloud::after {
-        width: 45px;
-        height: 45px;
-        top: -18px;
-        right: 20px;
+    .nav-links a:hover { color: var(--purple); }
+
+    .hero {
+      width: min(1120px, calc(100% - 40px));
+      min-height: 590px;
+      margin: 18px auto 70px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      align-items: center;
+      gap: 68px;
     }
 
-    .road {
-        position: absolute;
-        bottom: 0;
-        height: 30%;
-        width: 100%;
-        background: #444;
-        border-top: 8px solid #666;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 18px;
+      color: var(--purple);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
     }
 
-    .line {
-        position: absolute;
-        top: 50%;
-        width: 200%;
-        border-top: 6px dashed white;
-        animation: roadMove 1s linear infinite;
+    .eyebrow::before {
+      content: "";
+      width: 32px;
+      height: 2px;
+      background: var(--purple);
     }
 
-    .car {
-        position: absolute;
-        width: 220px;
-        height: 90px;
-        bottom: 17%;
-        left: 35%;
-        animation: bounce 0.4s ease-in-out infinite alternate;
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-size: clamp(3.5rem, 7vw, 6.8rem);
+      line-height: 0.91;
+      letter-spacing: -0.075em;
     }
 
-    .body {
-        position: absolute;
-        bottom: 15px;
-        width: 220px;
-        height: 55px;
-        background: #e53935;
-        border-radius: 25px 35px 10px 10px;
-        border: 3px solid #a71919;
+    .accent {
+      color: var(--purple);
+      position: relative;
+      z-index: 1;
     }
 
-    .top {
-        position: absolute;
-        top: 0;
-        left: 45px;
-        width: 125px;
-        height: 45px;
-        background: #e53935;
-        border-radius: 50px 50px 0 0;
+    .accent::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 2%;
+      right: -3%;
+      bottom: 3%;
+      height: 17%;
+      border-radius: 999px;
+      background: #ffd7a8;
+      transform: rotate(-2deg);
     }
 
-    .window {
-        position: absolute;
-        top: 8px;
-        left: 60px;
-        width: 45px;
-        height: 28px;
-        background: #b8f0ff;
-        border-radius: 15px 5px 0 0;
-        border: 2px solid #a71919;
+    .intro {
+      max-width: 570px;
+      margin: 28px 0;
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.75;
     }
 
-    .window2 {
-        position: absolute;
-        top: 8px;
-        left: 112px;
-        width: 45px;
-        height: 28px;
-        background: #b8f0ff;
-        border-radius: 5px 15px 0 0;
-        border: 2px solid #a71919;
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      flex-wrap: wrap;
     }
 
-    .wheel {
-        position: absolute;
-        bottom: 0;
-        width: 48px;
-        height: 48px;
-        background: #222;
-        border: 5px solid #111;
-        border-radius: 50%;
-        animation: spin 0.5s linear infinite;
+    .button {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 21px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 800;
+      transition: 180ms ease;
     }
 
-    .wheel::after {
-        content: "";
-        position: absolute;
-        inset: 9px;
-        background: #ccc;
-        border: 3px dashed #555;
-        border-radius: 50%;
+    .button-primary {
+      color: white;
+      background: var(--ink);
+      box-shadow: 0 12px 30px rgba(23, 32, 58, 0.16);
     }
 
-    .wheel.left { left: 25px; }
-    .wheel.right { right: 25px; }
-
-    @keyframes spin {
-        to { transform: rotate(360deg); }
+    .button-secondary {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.68);
     }
 
-    @keyframes roadMove {
-        to { transform: translateX(-100px); }
+    .button:hover { transform: translateY(-3px); }
+
+    .portrait-wrap {
+      position: relative;
+      min-height: 450px;
+      display: grid;
+      place-items: center;
     }
 
-    @keyframes cloudMove {
-        to { left: 110%; }
+    .portrait-shape {
+      width: min(380px, 82vw);
+      aspect-ratio: 0.88;
+      display: grid;
+      place-items: center;
+      border-radius: 48% 52% 44% 56% / 54% 45% 55% 46%;
+      background: linear-gradient(145deg, #7c67de 0%, #9d72d9 46%, #f5a1ba 100%);
+      box-shadow: 26px 30px 0 rgba(112, 87, 217, 0.09);
+      transform: rotate(3deg);
     }
 
-    @keyframes bounce {
-        to { transform: translateY(-3px); }
+    .portrait-inner {
+      width: 78%;
+      height: 78%;
+      display: grid;
+      place-items: center;
+      border: 2px solid rgba(255, 255, 255, 0.45);
+      border-radius: 50%;
+      color: white;
+      font-size: clamp(6rem, 13vw, 10rem);
+      font-weight: 900;
+      letter-spacing: -0.09em;
+      text-shadow: 0 12px 30px rgba(63, 45, 142, 0.18);
+      transform: rotate(-3deg);
     }
 
-    .title {
-        position: absolute;
-        top: 30px;
-        left: 20px;
-        color: white;
-        font-size: clamp(22px, 4vw, 38px);
-        text-shadow: 2px 2px 5px #555;
+    .floating-card {
+      position: absolute;
+      right: -4%;
+      bottom: 6%;
+      max-width: 180px;
+      padding: 16px 18px;
+      border: 1px solid rgba(23, 32, 58, 0.06);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 18px 45px rgba(23, 32, 58, 0.12);
+      font-size: 0.78rem;
+      line-height: 1.5;
+      transform: rotate(-3deg);
     }
-</style>
+
+    .section {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto 70px;
+      padding: 72px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 0.42fr 0.58fr;
+      gap: 70px;
+    }
+
+    .section-kicker {
+      color: var(--pink);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 12px 0 0;
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .about-copy {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.85;
+    }
+
+    .about-copy strong { color: var(--ink); }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid var(--line);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .journey {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 210px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .card-number {
+      display: inline-grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      margin-bottom: 34px;
+      border-radius: 12px;
+      color: white;
+      background: var(--purple);
+      font-weight: 900;
+    }
+
+    .card:nth-child(2) .card-number { background: var(--pink); }
+    .card:nth-child(3) .card-number { background: #d99050; }
+    .card h3 { margin: 0 0 8px; }
+    .card p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+    .goal-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      padding: 40px;
+      border-radius: 28px;
+      color: white;
+      background: var(--ink);
+    }
+
+    .goal-banner h2 {
+      max-width: 680px;
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+    }
+
+    .goal-mark {
+      flex: 0 0 auto;
+      width: 94px;
+      height: 94px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--pink);
+      font-size: 2.4rem;
+      transform: rotate(7deg);
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+      padding: 20px 0 42px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    @media (max-width: 820px) {
+      .nav-links { display: none; }
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin-top: 48px;
+      }
+      h1 { font-size: clamp(3.6rem, 17vw, 5.8rem); }
+      .portrait-wrap { min-height: 390px; }
+      .section-grid { grid-template-columns: 1fr; gap: 28px; }
+      .journey { grid-template-columns: 1fr; }
+      .goal-banner { align-items: flex-end; }
+    }
+
+    @media (max-width: 480px) {
+      .nav, .hero, .section, footer { width: min(100% - 28px, 1120px); }
+      .portrait-wrap { min-height: 320px; }
+      .floating-card { right: 0; }
+      .goal-banner { padding: 28px 24px; }
+      .goal-mark { width: 66px; height: 66px; font-size: 1.7rem; }
+      footer { flex-direction: column; gap: 8px; }
+    }
+  </style>
 </head>
-
 <body>
-<div class="scene">
-    <div class="sun"></div>
-    <div class="cloud"></div>
-
-    <h1 class="title">🚗 Let's Go Driving!</h1>
-
-    <div class="road">
-        <div class="line"></div>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="brand" href="#top">Adam<span class="brand-dot"></span></a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#journey">Journey</a>
+      <a href="#goal">Goals</a>
     </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Based in Kobe, Japan</div>
+        <h1>Hello, I'm <span class="accent">Adam.</span></h1>
+        <p class="intro">
+          I’m a student, lifelong learner, and an enthusiast of the Japanese language.
+          I enjoy discovering new ideas and building the knowledge that will shape my future.
+        </p>
+        <div class="actions">
+          <a class="button button-primary" href="#about">Get to know me</a>
+          <a class="button button-secondary" href="https://github.com/s26137-stack/prt1" target="_blank" rel="noopener noreferrer">Visit GitHub</a>
+        </div>
+      </div>
+
+      <div class="portrait-wrap" aria-label="Adam initial portrait">
+        <div class="portrait-shape">
+          <div class="portrait-inner">A</div>
+        </div>
+        <div class="floating-card">
+          <strong>Currently learning</strong><br>
+          Japanese & new possibilities
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-grid">
+        <div>
+          <span class="section-kicker">01 / About</span>
+          <h2>Curious by nature.</h2>
+        </div>
+        <div class="about-copy">
+          <p>
+            I’m currently studying and exploring life in <strong>Kobe, Japan</strong>.
+            Learning Japanese is an important part of my journey, both as a personal challenge
+            and as a way to connect more deeply with the culture around me.
+          </p>
+          <p>
+            I’m motivated by growth and the possibility of turning hard work into lasting opportunities.
+            My long-term goal is to achieve a <strong>PhD</strong>.
+          </p>
+          <div class="chips" aria-label="Interests">
+            <span class="chip">Japanese language</span>
+            <span class="chip">ICT</span>
+            <span class="chip">Continuous learning</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="journey">
+      <div class="section-grid">
+        <div>
+          <span class="section-kicker">02 / Journey</span>
+          <h2>Experience along the way.</h2>
+        </div>
+        <div class="journey">
+          <article class="card">
+            <span class="card-number">1</span>
+            <h3>Huawei Chad</h3>
+            <p>Previous work experience and exposure to a global technology organization.</p>
+          </article>
+          <article class="card">
+            <span class="card-number">2</span>
+            <h3>ICT Solution Center</h3>
+            <p>Previous work experience in an information and communications technology environment.</p>
+          </article>
+          <article class="card">
+            <span class="card-number">3</span>
+            <h3>New chapter</h3>
+            <p>Studying in Kobe while developing my Japanese language skills and future direction.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="goal">
+      <div class="goal-banner">
+        <h2>Learning today. Leading tomorrow.</h2>
+        <div class="goal-mark" aria-label="Arrow toward goals">→</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Adam</span>
+    <span>Kobe, Japan</span>
+  </footer>
+</body>
+</html>
